@@ -87,7 +87,25 @@ none, and the version doesn't move.
 `fix:` and `feat:` cut a release. Everything else doesn't.
 
 One logical change per commit, and one reviewable change per pull request.
-Work lands through a pull request; nothing is pushed to `main` directly.
+Work lands through a pull request; nothing is pushed to `main` directly —
+`main` is a protected branch, so that is enforced rather than trusted.
+
+**Pull requests are squash merged**, and it is the only method the repository
+allows. That is release-please's documented workflow: one pull request becomes
+one commit on `main`, and the changelog entry is that commit.
+
+Merge commits were the alternative and they double every entry. GitHub builds a
+merge commit's body from the pull request title, so a branch's own
+`fix(ci): ...` commit and the merge commit landing it on `main` both parse as
+conventional commits, and release-please counts them twice. There is no setting
+that avoids it: GitHub allows only three title/body combinations for merge
+commits, and each leaves the conventional subject somewhere release-please
+reads.
+
+The cost is that a branch built as a readable sequence of commits collapses to
+one. So the pull request title carries the weight — it becomes the commit
+subject and the changelog line — and the body becomes the commit body. Write
+them as though they are the commit, because they are.
 
 ## Pinning
 

@@ -10,19 +10,17 @@ is nothing for them to point at.
 
 ### Features
 
-* lint the prose ([6fb86a7](https://github.com/alrayyes/cloudflare-wrangler/commit/6fb86a7afa27e4845c8fdb9bcea2eb7fa0ff1435))
-* lint the prose ([7e0037c](https://github.com/alrayyes/cloudflare-wrangler/commit/7e0037c7c3a10368ced89f9e2824780655ddef77))
+* lint the prose ([121b5d1](https://github.com/alrayyes/cloudflare-wrangler/commit/121b5d14b7c60a89ef61911de1da3d22dd0bda11))
 
 
 ### Bug Fixes
 
-* **ci:** tag releases bare, not prefixed with the component ([e195dd1](https://github.com/alrayyes/cloudflare-wrangler/commit/e195dd1bdcd8ddaf1a2d000b2a36bf4626ac52d3))
-* **ci:** tag releases bare, not prefixed with the component ([fc8c8ba](https://github.com/alrayyes/cloudflare-wrangler/commit/fc8c8ba2bc5b9ddb994e1f431f69b1cf0e68f5c5))
+* **ci:** tag releases bare, not prefixed with the component ([e36af88](https://github.com/alrayyes/cloudflare-wrangler/commit/e36af88c7eea8c8630a26637b190d924f7445dce))
 
 
 ### Documentation
 
-* describe this as a ci/cd image ([1c62eb4](https://github.com/alrayyes/cloudflare-wrangler/commit/1c62eb463e8839e0082a847b6c156e3e55c1964c))
+* describe this as a ci/cd image ([86a9b75](https://github.com/alrayyes/cloudflare-wrangler/commit/86a9b75033b03844bc534a365ce13d4a6ad16955))
 
 ## 1.0.177 (2025-12-02)
 
