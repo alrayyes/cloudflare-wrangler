@@ -6,18 +6,9 @@
 			"customType": "regex",
 			"fileMatch": ["^Dockerfile$"],
 			"matchStrings": [
-				"pnpm add -g wrangler@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+				"bun add -g wrangler@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
 			],
 			"depNameTemplate": "wrangler",
-			"datasourceTemplate": "npm"
-		},
-		{
-			"customType": "regex",
-			"fileMatch": ["^Dockerfile$"],
-			"matchStrings": [
-				"corepack prepare pnpm@(?<currentValue>[^\\s]+) --activate"
-			],
-			"depNameTemplate": "pnpm",
 			"datasourceTemplate": "npm"
 		}
 	]
