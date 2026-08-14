@@ -1,6 +1,6 @@
 # cloudflare-wrangler
 
-[![ci](https://github.com/alrayyes/cloudflare-wrangler/actions/workflows/ci.yml/badge.svg)](https://github.com/alrayyes/cloudflare-wrangler/actions/workflows/ci.yml)
+[![CI](https://github.com/alrayyes/cloudflare-wrangler/actions/workflows/ci.yml/badge.svg)](https://github.com/alrayyes/cloudflare-wrangler/actions/workflows/ci.yml)
 [![release](https://img.shields.io/github/v/release/alrayyes/cloudflare-wrangler)](https://github.com/alrayyes/cloudflare-wrangler/releases)
 [![licence](https://img.shields.io/github/license/alrayyes/cloudflare-wrangler)](LICENSE)
 
@@ -8,7 +8,7 @@ An image carrying the [Cloudflare wrangler](https://developers.cloudflare.com/wo
 CLI, for CI/CD pipelines that deploy to Cloudflare — so a deploy job stops
 installing it on every run.
 
-```
+```text
 ghcr.io/alrayyes/cloudflare-wrangler:latest
 ```
 
@@ -23,7 +23,7 @@ is the only sane way to pass them to a container.
 
 ## Usage
 
-```
+```sh
 docker run --rm \
   -e CLOUDFLARE_API_TOKEN -e CLOUDFLARE_ACCOUNT_ID \
   -v "$PWD:/app" \
@@ -56,7 +56,7 @@ raise a pull request to change.
 
 Verify where it came from:
 
-```
+```sh
 gh attestation verify oci://ghcr.io/alrayyes/cloudflare-wrangler:latest --repo alrayyes/cloudflare-wrangler
 ```
 

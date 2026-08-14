@@ -6,7 +6,8 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**", "!.tools", "!styles/Google", "!styles/proselint"]
 	},
 	"formatter": {
 		"enabled": true,
