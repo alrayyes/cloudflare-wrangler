@@ -1,3 +1,9 @@
 node_modules/
 .idea/
 .bun
+
+# Vale: the binary and the style packages are fetched, not committed. The
+# vocabulary under styles/config is ours and stays.
+.tools/
+styles/Google/
+styles/proselint/

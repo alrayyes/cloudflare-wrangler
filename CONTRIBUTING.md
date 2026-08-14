@@ -6,7 +6,7 @@
 else — there is no node toolchain here, and the node in the published image is
 the image's business rather than yours.
 
-```
+```sh
 bun install
 ```
 
@@ -15,7 +15,7 @@ thing to run rather than an optional step.
 
 ## The commands
 
-```
+```sh
 bun run lint                                          # biome, check only
 bun run lint:fix                                      # biome, writing
 docker build .
@@ -24,6 +24,52 @@ docker compose run --rm -T hadolint hadolint Dockerfile
 
 The hooks run those before a commit and a push, and CI runs the same ones, so
 CI should rarely be the first to tell you something is wrong.
+
+## The prose
+
+Prose gets linted too — the README and this document — in three tiers over a
+formatter. They are the public face of a public repository, so a dead link or a
+mangled article is as much a defect as a broken build.
+
+```sh
+bun run format          # prettier, writing: markdown and yaml layout
+bun run lint:format     # prettier, check only
+bun run lint:md         # markdownlint: structure, and an 80 column limit
+bun run lint:grammar    # ltex: grammar and spelling. Fails the build
+bun run prose:sync      # fetch the pinned vale binary and its styles
+bun run lint:prose      # vale: house voice. Errors only
+bun run lint:prose:advice
+```
+
+Two things about that split are deliberate. **Prettier runs before
+markdownlint**, always: Prettier decides layout and markdownlint judges what
+Prettier produced, and the other order gets you a hook that fails twice and
+fixes nothing. And **LTeX can fail a build where Vale mostly cannot** —
+mechanics have a right answer, style is advice, and style that blocks a merge
+teaches people `--no-verify`.
+
+`bun run format` fixes almost every Prettier or markdownlint complaint. If
+`lint:format` is red, run it rather than arguing with a rule.
+
+A gotcha worth knowing before it costs you a red pipeline: **Vale and LTeX keep
+separate dictionaries and neither reads the other.** A new product name or
+piece of jargon goes in `styles/config/vocabularies/House/accept.txt` _and_ in
+`.ltex.json`, or the tier you forgot fails on its own.
+
+The vocabulary spells tool names the way this project writes them, which is
+lowercase — `bun`, `biome`, `hadolint`, as they appear on a command line —
+and `Vale.Terms` holds the prose to it rather than merely tolerating it.
+
+`.ltex.json` turns off two rules beyond the usual: `PREPOSITION_VERB`, which
+reads "a deploy job" as a mis-conjugated verb rather than a compound noun, and
+`PRP_COMMA`, which is comma advice and therefore Vale's business. `LTeX`
+reports findings with **exit code 3**, not 1, so anything testing for a
+specific code will pass a failing document.
+
+Vale's binary lives in `.tools/` and its Google and proselint styles in
+`styles/Google` and `styles/proselint`. All three are fetched by `prose:sync`
+and none are committed; only the House vocabulary under `styles/config` is
+ours.
 
 CI also runs checks against the built image that the hooks don't: that
 `wrangler --version` works, that the runtime is node and not bun, that bun
@@ -46,7 +92,7 @@ Work lands through a pull request; nothing is pushed to `main` directly.
 ## Pinning
 
 Everything is pinned to an exact version and the lockfile is committed:
-`devDependencies` without ranges, base images by tag *and* digest, GitHub
+`devDependencies` without ranges, base images by tag _and_ digest, GitHub
 Actions by commit SHA with a `# vX.Y.Z` comment beside them. Renovate reads
 that comment to know what to bump, so keep it.
 

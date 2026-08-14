@@ -1,0 +1,24 @@
+node_modules
+
+# Vale's style packages, vendored by `vale sync` and not ours to format.
+styles/Google
+styles/proselint
+
+# Written by release-please from the commit subjects and committed by the
+# release job, which runs no hook. Prettier would rewrite it and the next
+# release would put it back, so it stays in the shape its generator writes.
+CHANGELOG.md
+
+# Prettier is here for Markdown and YAML and nothing else - the two file types
+# Biome does not format. Everything Biome does format is listed here so that a
+# bare `prettier --write .` cannot quietly take the JSON off it and start a
+# formatter war in the pre-commit hook.
+#
+# `.` and not a glob is what the scripts pass, deliberately: `**/*.{yml,yaml}`
+# does not match dot directories, so it silently skipped every file under
+# .github/ - the half of Prettier's remit nobody notices is missing. Scoping by
+# this file instead means a new directory is covered by default rather than
+# forgotten.
+*.json
+*.jsonc
+*.ts

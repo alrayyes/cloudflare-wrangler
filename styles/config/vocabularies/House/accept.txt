@@ -1,0 +1,32 @@
+# One regex per line. Casing here is the casing Vale.Terms holds the docs to.
+# Tool names are lowercase because that is how this project writes them - the
+# way they appear on a command line - and Vale.Terms holds the prose to it.
+Alpine
+biome
+bun
+bunx
+[Cc]ommitlint
+Cloudflare
+cloudflare-wrangler
+Dockerfile
+ghcr
+GitHub
+GitLab
+glibc
+hadolint
+LanguageTool
+[Ll]efthook
+LTeX
+Markdown
+markdownlint-cli2
+[Mm]arkdownlint
+musl
+npm
+pnpm
+Prettier
+proselint
+release-please
+Renovate
+Vale
+workerd
+[Ww]rangler

@@ -54,6 +54,60 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bunx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
+  # Prose is linted in three tiers, in three jobs, because when this goes red
+  # the job name should say which tier failed. A grammar error is a mistake and
+  # a style alert is an opinion, and they get answered differently.
+
+  # Layout and structure. Prettier decides the layout, markdownlint judges what
+  # Prettier produced - so `--check` runs first and a failure there means "run
+  # bun run format", not "argue with a rule".
+  markdown:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
+      - run: bun run lint:format
+      - run: bun run lint:md
+
+  # Grammar and spelling, and the only prose tier that can fail a pull request.
+  # Mechanics have a right answer; style advice that blocks a merge teaches
+  # people --no-verify.
+  #
+  # Runs the same script the pre-push hook runs. A linter whose invocation lives
+  # inline in a workflow is the one that goes missing from the hooks.
+  ltex:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The release is ~300MB and carries its own Java. Cached on the version
+      # in the script, so a run costs a restore rather than a download.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ltex-ls-plus
+          key: ltex-${{ hashFiles('scripts/ltex.sh') }}
+      # The script directly rather than `bun run lint:grammar`, which is all
+      # that script does anyway - this job has no other use for a bun install.
+      - run: sh scripts/ltex.sh
+
+  # Style. House voice, weasel words, wordiness. Advice rather than a verdict:
+  # Vale exits non-zero only on error-severity alerts, so its warnings are
+  # reported without failing anything.
+  vale:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
+      # Fetches the pinned Vale binary and its style packages. They are not
+      # committed; only the House vocabulary under styles/config is ours.
+      - run: bun run prose:sync
+      - run: bun run lint:prose:advice
+
   dockerfile:
     runs-on: ubuntu-24.04
     steps:
