@@ -2,7 +2,7 @@
 	"name": "cloudflare-wrangler-docker-image",
 	"private": true,
 	"description": "Docker image with cloudflare wrangler installed",
-	"version": "1.0.177",
+	"version": "1.0.178",
 	"author": "Ryan Kes <511318+alrayyes@users.noreply.github.com>",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.7",

@@ -5,6 +5,25 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.0.178](https://github.com/alrayyes/cloudflare-wrangler/compare/1.0.177...1.0.178) (2026-08-14)
+
+
+### Features
+
+* lint the prose ([6fb86a7](https://github.com/alrayyes/cloudflare-wrangler/commit/6fb86a7afa27e4845c8fdb9bcea2eb7fa0ff1435))
+* lint the prose ([7e0037c](https://github.com/alrayyes/cloudflare-wrangler/commit/7e0037c7c3a10368ced89f9e2824780655ddef77))
+
+
+### Bug Fixes
+
+* **ci:** tag releases bare, not prefixed with the component ([e195dd1](https://github.com/alrayyes/cloudflare-wrangler/commit/e195dd1bdcd8ddaf1a2d000b2a36bf4626ac52d3))
+* **ci:** tag releases bare, not prefixed with the component ([fc8c8ba](https://github.com/alrayyes/cloudflare-wrangler/commit/fc8c8ba2bc5b9ddb994e1f431f69b1cf0e68f5c5))
+
+
+### Documentation
+
+* describe this as a ci/cd image ([1c62eb4](https://github.com/alrayyes/cloudflare-wrangler/commit/1c62eb463e8839e0082a847b6c156e3e55c1964c))
+
 ## 1.0.177 (2025-12-02)
 
 ## 1.0.176 (2025-11-27)
