@@ -1,0 +1,48 @@
+{
+	"language": "en-GB",
+	"dictionary": {
+		"en-GB": [
+			"Alpine",
+			"Biome",
+			"Cloudflare",
+			"cloudflare-wrangler",
+			"Dockerfile",
+			"GitHub",
+			"LTeX",
+			"LanguageTool",
+			"Renovate",
+			"bun",
+			"bunx",
+			"commitlint",
+			"corepack",
+			"entrypoint",
+			"ghcr",
+			"glibc",
+			"hadolint",
+			"lefthook",
+			"linted",
+			"lockfile",
+			"markdownlint",
+			"musl",
+			"node-compat",
+			"npm",
+			"pnpm",
+			"proselint",
+			"semver",
+			"subcommands",
+			"toolchain",
+			"wrangler",
+			"workerd"
+		]
+	},
+	"disabledRules": {
+		"en-GB": [
+			"PASSIVE_VOICE",
+			"UPPERCASE_SENTENCE_START",
+			"LICENCE_LICENSE_NOUN_SINGULAR",
+			"OXFORD_SPELLING_Z_NOT_S",
+			"PREPOSITION_VERB",
+			"PRP_COMMA"
+		]
+	}
+}
