@@ -1,0 +1,102 @@
+# What a pull request has to survive. Nothing here publishes; that is release.yml's
+# job, and keeping the two apart is why a branch can never put a tag in the registry.
+#
+# The GitLab pipeline this replaces ran each job inside a bare tool image and had to
+# install its own toolchain first. GitHub's runners already carry node, git and
+# docker, so a job here is the tool and nothing else.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# A second push to the same branch makes the first run's answer worthless.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+      # --frozen-lockfile so a drifted bun.lock fails the job rather than quietly
+      # resolving something else. Deliberately uncached: a cold install is seconds,
+      # and taring the cache to save them costs more than it saves.
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+
+  commits:
+    # release-please reads Conventional Commits to decide the next version and write
+    # the changelog. A commit that does not parse does not get a worse release note -
+    # it gets none, and the version does not move. So this is part of releasing
+    # rather than a style preference.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Both endpoints have to be in the clone for commitlint to walk between
+          # them, and the default shallow fetch has neither.
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+      # A real install, not bare bunx: commitlint resolves
+      # @commitlint/config-conventional as a sibling package.
+      - run: bun install --frozen-lockfile
+      - run: bunx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  dockerfile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # No config file. The sibling images need one to argue with DL3018 about
+      # unpinned apk versions; this Dockerfile installs nothing through apk, so
+      # hadolint has nothing to forgive and gets no excuses to carry.
+      - uses: hadolint/hadolint-action@2a66e89f53d0771bb131a7fa31f3136336094aa6 # v3.4.0
+        with:
+          dockerfile: Dockerfile
+
+  image:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # --pull so a base image already on the runner cannot make a broken FROM line
+      # look fine. Build only - the tag dies with the runner.
+      - run: docker build --pull -t cloudflare-wrangler:ci .
+
+      - name: wrangler runs, at the pinned version
+        run: |
+          docker run --rm cloudflare-wrangler:ci wrangler --version
+          docker run --rm cloudflare-wrangler:ci | head -3
+
+      # The build stage installs with bun and the final stage runs with node, and
+      # nothing about a green `docker build` tells you the second half still holds.
+      # If the final FROM ever slips to a bun image the build still passes: oven's
+      # images put /usr/local/bun-node-fallback-bin/node -> bun at the end of PATH,
+      # so wrangler's `#!/usr/bin/env node` shebang resolves to bun and everything
+      # looks normal until wrangler starts exiting 0 on rejected Cloudflare
+      # credentials. These two lines are the only thing standing between that and a
+      # release.
+      - name: it is node underneath, and bun did not ride along
+        run: |
+          docker run --rm cloudflare-wrangler:ci node -e 'if (process.versions.bun) { console.error("running under bun " + process.versions.bun); process.exit(1) }'
+          docker run --rm cloudflare-wrangler:ci sh -c 'command -v bun && exit 1; exit 0'
+
+      # Exercises esbuild's musl build and wrangler's own bundling, offline.
+      - name: it can bundle a worker
+        run: |
+          docker run --rm cloudflare-wrangler:ci sh -c '
+            cd /app
+            printf "export default { fetch() { return new Response(\"ok\"); } };\n" > index.js
+            printf "name = \"ci\"\nmain = \"index.js\"\ncompatibility_date = \"2026-01-01\"\n" > wrangler.toml
+            wrangler deploy --dry-run --outdir /tmp/out && test -s /tmp/out/index.js'
