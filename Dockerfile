@@ -1,14 +1,40 @@
+# Wrangler is installed by bun and run by node. Those are two separate decisions
+# and only the first one is the move off pnpm.
+#
+# Running it under bun is not on the table. On bun's node-compat layer wrangler
+# swallows Cloudflare API errors: `wrangler deploy` against a rejected token
+# prints its banner, makes the request, and exits 0 - nothing on stderr, and no
+# error in wrangler's own log file either. Under node the same command exits 1
+# and says why. Not every command does this - `d1 list` reports its error fine -
+# which is worse, because a smoke test passes. An image whose only job is
+# deploying cannot report a failed deploy as a success.
+#
+# Keeping node also keeps the `#!/usr/bin/env node` in wrangler's bin script
+# honest. oven/bun's images put /usr/local/bun-node-fallback-bin/node -> bun at
+# the end of PATH, so a bun-only image satisfies that shebang with bun and hides
+# the swap behind a symlink nothing in this file mentions.
+FROM oven/bun:1.3.14-alpine@sha256:5acc90a93e91ff07bf72aa90a7c9f0fa189765aec90b47bdbf2152d2196383c0 AS build
+
+# bun's global bin is $BUN_INSTALL/bin - the same shape as pnpm 11's $PNPM_HOME/bin.
+# The trap is BUN_INSTALL_BIN, which overrides it outright and which oven's images
+# already set to /usr/local/bin. Set only BUN_INSTALL and the install lands in the
+# build stage's /usr/local/bin, the COPY below brings across an empty tree, and the
+# image builds clean and fails at runtime with "wrangler: not found". Both have to
+# be set.
+ENV BUN_INSTALL=/opt/wrangler \
+    BUN_INSTALL_BIN=/opt/wrangler/bin
+
+RUN bun add -g wrangler@4.120.0
+
 FROM node:24.19.0-alpine@sha256:d32cdf619f63fe0471182d08996dd516c6275bb5fd31ae06e55a570bd9e1ad43
 
-# pnpm 11 puts global binaries in $PNPM_HOME/bin, where pnpm 10 put them straight
-# into $PNPM_HOME. So this has to name the *parent* of a directory already on
-# PATH: /usr/local gives /usr/local/bin. Setting it to /usr/sbin, which worked on
-# pnpm 10, now fails the build outright with "global bin directory not in PATH".
-ENV PNPM_HOME=/usr/local
+# One prefix, one COPY, and nothing landing in /usr/local to collide with node's
+# own files. bun writes the bin entries as symlinks relative to $BUN_INSTALL
+# (bin/wrangler -> ../install/global/node_modules/wrangler/bin/wrangler.js), so
+# they survive the copy as long as the whole tree moves together.
+COPY --from=build /opt/wrangler /opt/wrangler
 
-RUN corepack enable  \
-    && corepack prepare pnpm@11.21.0 --activate \
-    && pnpm add -g wrangler@4.120.0
+ENV PATH=/opt/wrangler/bin:$PATH
 
 WORKDIR /app
 
