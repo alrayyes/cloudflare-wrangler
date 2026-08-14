@@ -11,5 +11,11 @@
 			"depNameTemplate": "wrangler",
 			"datasourceTemplate": "npm"
 		}
+	],
+	"packageRules": [
+		{
+			"matchManagers": ["dockerfile", "custom.regex"],
+			"semanticCommitType": "fix"
+		}
 	]
 }
