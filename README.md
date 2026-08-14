@@ -5,7 +5,8 @@
 [![licence](https://img.shields.io/github/license/alrayyes/cloudflare-wrangler)](LICENSE)
 
 An image carrying the [Cloudflare wrangler](https://developers.cloudflare.com/workers/wrangler/)
-CLI, so a deploy job stops installing it on every run.
+CLI, for CI/CD pipelines that deploy to Cloudflare — so a deploy job stops
+installing it on every run.
 
 ```
 ghcr.io/alrayyes/cloudflare-wrangler:latest
@@ -59,14 +60,13 @@ Verify where it came from:
 gh attestation verify oci://ghcr.io/alrayyes/cloudflare-wrangler:latest --repo alrayyes/cloudflare-wrangler
 ```
 
-### What it can't do
+### Scope
 
-`wrangler dev` does not work here. It needs `workerd`, which ships as a
-glibc-linked binary, and this image is built on musl Alpine — the binary is
-present and won't load. Everything that runs remotely (`deploy`, `versions
-upload`, `d1`, `kv`, `secret`) is fine, and so is `deploy --dry-run`, which
-bundles locally without needing a runtime. Local development belongs on your
-machine rather than in this container.
+This is a pipeline image. It covers the commands a deploy job runs — `deploy`,
+`versions upload`, `pages deploy`, `d1`, `kv`, `secret`, and `deploy --dry-run`
+— and local development is not in scope. `wrangler dev` needs `workerd`, a
+glibc binary that won't load on musl Alpine; run it on your own machine
+instead.
 
 Wrangler is installed by bun and **run by node**, deliberately. Under bun's
 node-compat layer wrangler swallows Cloudflare API errors and exits 0 on a
