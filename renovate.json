@@ -1,0 +1,24 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"ignoreTests": true,
+	"customManagers": [
+		{
+			"customType": "regex",
+			"fileMatch": ["^Dockerfile$"],
+			"matchStrings": [
+				"pnpm add -g wrangler@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+			],
+			"depNameTemplate": "wrangler",
+			"datasourceTemplate": "npm"
+		},
+		{
+			"customType": "regex",
+			"fileMatch": ["^Dockerfile$"],
+			"matchStrings": [
+				"corepack prepare pnpm@(?<currentValue>[^\\s]+) --activate"
+			],
+			"depNameTemplate": "pnpm",
+			"datasourceTemplate": "npm"
+		}
+	]
+}

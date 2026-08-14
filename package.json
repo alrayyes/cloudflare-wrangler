@@ -1,0 +1,23 @@
+{
+	"name": "cloudflare-wrangler-docker-image",
+	"private": true,
+	"description": "Docker image with cloudflare wrangler installed",
+	"version": "1.0.177",
+	"author": "Ryan Kes <511318+alrayyes@users.noreply.github.com>",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.7",
+		"@commitlint/cli": "21.2.1",
+		"@commitlint/config-conventional": "21.2.0",
+		"lefthook": "2.1.10"
+	},
+	"scripts": {
+		"lint": "biome check",
+		"lint:fix": "biome check --write",
+		"prepare": "lefthook install"
+	},
+	"repository": "https://github.com/alrayyes/cloudflare-wrangler",
+	"bugs": {
+		"url": "https://github.com/alrayyes/cloudflare-wrangler/issues"
+	},
+	"license": "GPL-3.0-or-later"
+}
