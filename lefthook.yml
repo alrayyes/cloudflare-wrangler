@@ -11,6 +11,15 @@ pre-push:
     - run: bun run lint
     - run: docker compose run --rm -T hadolint hadolint Dockerfile
     - run: docker build .
+    - name: prettier
+      run: bun run lint:format
+    - name: markdownlint
+      run: bun run lint:md
+    # Grammar and spelling. Here rather than in pre-commit because the first
+    # run fetches a ~300MB archive carrying its own Java; after that it is
+    # cached outside the repo and a run over three documents is seconds.
+    - name: ltex
+      run: bun run lint:grammar
 
 pre-commit:
   parallel: true
@@ -22,3 +31,38 @@ pre-commit:
       glob: "Dockerfile"
     - run: docker build .
       glob: "Dockerfile"
+
+    # Prettier decides the layout and markdownlint then judges what Prettier
+    # produced. The other order has markdownlint fixing something Prettier is
+    # about to overwrite, so these two are a sequence rather than a parallel
+    # pair.
+    - name: markdown
+      glob: "*.md"
+      stage_fixed: true
+      group:
+        piped: true
+        jobs:
+          - name: prettier
+            glob: "*.md"
+            run: bunx --bun prettier --write {staged_files}
+          - name: markdownlint
+            glob: "*.md"
+            run: bunx --bun markdownlint-cli2 {staged_files}
+
+    # YAML gets the same formatter and nothing judges the result afterwards,
+    # so it is one job rather than a pipe.
+    - name: prettier-yaml
+      glob: "*.{yml,yaml}"
+      stage_fixed: true
+      run: bunx --bun prettier --write {staged_files}
+
+    # Style. Fast enough for a commit, and advice rather than a verdict:
+    # --minAlertLevel=error means the warnings are reported without failing
+    # anything. CHANGELOG.md is excluded here as well as in `lint:prose`
+    # because release-please writes it from commit subjects and nobody can fix
+    # it in place.
+    - name: vale
+      glob: "*.md"
+      exclude:
+        - CHANGELOG.md
+      run: .tools/vale --minAlertLevel=error {staged_files}

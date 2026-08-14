@@ -1,0 +1,38 @@
+# Prettier decides layout and markdownlint judges what Prettier produced, so
+# every rule the two could disagree about comes off. That list is not
+# hand-rolled: markdownlint ships it beside the rules themselves and maintains
+# it there, which is 23 rules covering heading style, blanks around headings
+# and lists, fence style, hard tabs, trailing spaces, list indent and marker
+# spacing.
+extends: "markdownlint/style/prettier"
+
+config:
+  # That style drops MD013 on the grounds that Prettier reflows prose - which
+  # it only does on proseWrap "always" or "never". This repo is on "preserve",
+  # where Prettier never moves a line break, so the check is still ours and
+  # still worth having.
+  #
+  # Under the alias, never as MD013: `extends` merges on the literal key rather
+  # than the rule it resolves to, so an MD013 block would sit beside the
+  # inherited `line-length: false` and lose, leaving a config that reads as
+  # though the rule is on while it is off.
+  line-length:
+    line_length: 80
+    # A pinned digest, a ghcr address and a `gh attestation verify` invocation
+    # are all one long token. Wrapping them would break them.
+    code_blocks: false
+    tables: false
+    headings: false
+
+globs:
+  - "**/*.md"
+
+ignores:
+  - "node_modules/**"
+  # Vendored by `vale sync`. Generated text belongs to nobody.
+  - "styles/Google/**"
+  - "styles/proselint/**"
+  # Written by release-please from the commit subjects and committed by the
+  # release job without passing through any hook. Linting it means failing a
+  # run over prose no human chose and no human can fix in place.
+  - "CHANGELOG.md"
