@@ -1,5 +1,0 @@
-allowBuilds:
-  lefthook: true
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - lefthook

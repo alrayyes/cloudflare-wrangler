@@ -3,19 +3,19 @@ skip_lfs: true
 commit-msg:
   commands:
     "lint commit message":
-      run: pnpm commitlint --edit {1}
+      run: bunx commitlint --edit {1}
 
 pre-push:
   parallel: true
   jobs:
-    - run: pnpm lint
+    - run: bun run lint
     - run: docker compose run --rm -T hadolint hadolint Dockerfile
     - run: docker build .
 
 pre-commit:
   parallel: true
   jobs:
-    - run: pnpm lint:fix .
+    - run: bun run lint:fix .
       glob: "*"
       stage_fixed: true
     - run: docker compose run --rm -T hadolint hadolint Dockerfile
