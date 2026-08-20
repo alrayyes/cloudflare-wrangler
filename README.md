@@ -6,7 +6,10 @@
 
 An image carrying the [Cloudflare wrangler](https://developers.cloudflare.com/workers/wrangler/)
 CLI, for CI/CD pipelines that deploy to Cloudflare — so a deploy job stops
-installing it on every run.
+installing it on every run. It also carries `curl` and `ca-certificates`,
+which Alpine doesn't ship by default, for a step later in the same job that
+needs to reach an HTTPS endpoint — a webhook, a notification — without
+installing them itself.
 
 ```text
 ghcr.io/alrayyes/cloudflare-wrangler:latest

@@ -28,6 +28,22 @@ RUN bun add -g wrangler@4.120.0
 
 FROM node:24.19.0-alpine@sha256:d32cdf619f63fe0471182d08996dd516c6275bb5fd31ae06e55a570bd9e1ad43
 
+# curl and ca-certificates aren't wrangler's business - they're here because a
+# pipeline step that runs after a deploy (a webhook, a notification) reaches
+# for curl assuming any Linux image has it, Alpine doesn't ship it, and the
+# failure is easy to miss if that step also has to not fail the job over a
+# third party being down.
+#
+# Pinned versions, not bare `apk add curl ca-certificates` - hadolint DL3018
+# wants that everywhere else in this file already. The version has to live in
+# an ENV rather than inline in the RUN, because that's what the Repology
+# datasource's regex manager in renovate.json matches on to keep both current.
+# renovate: datasource=repology depName=alpine_3_24/curl versioning=loose
+ENV CURL_VERSION="8.21.0-r0"
+# renovate: datasource=repology depName=alpine_3_24/ca-certificates versioning=loose
+ENV CA_CERTIFICATES_VERSION="20260611-r0"
+RUN apk add --no-cache curl="${CURL_VERSION}" ca-certificates="${CA_CERTIFICATES_VERSION}"
+
 # One prefix, one COPY, and nothing landing in /usr/local to collide with node's
 # own files. bun writes the bin entries as symlinks relative to $BUN_INSTALL
 # (bin/wrangler -> ../install/global/node_modules/wrangler/bin/wrangler.js), so
