@@ -1,0 +1,50 @@
+# Dependabot raises the pull request; CI decides whether it lands. Everything
+# here is pinned to an exact version, which is the whole reason this works —
+# a floating range drifts silently and there's nothing to raise a pull
+# request about.
+version: 2
+
+updates:
+  # wrangler and its dependencies ship in what this repo produces, so a
+  # bump here is a change to what ships.
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: fix
+      include: scope
+    groups:
+      bun-dependencies:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    commit-message:
+      prefix: fix
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions:
+        patterns: ["*"]
+        update-types: [minor, patch]
