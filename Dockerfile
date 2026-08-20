@@ -26,7 +26,7 @@ ENV BUN_INSTALL=/opt/wrangler \
 
 RUN bun add -g wrangler@4.120.0
 
-FROM node:24.19.0-alpine@sha256:d32cdf619f63fe0471182d08996dd516c6275bb5fd31ae06e55a570bd9e1ad43
+FROM node:26.7.0-alpine@sha256:aadf416b2cdce311a8811ba3f0608a61b77dbf997500e2eafe781b51f6a0b019
 
 # curl and ca-certificates aren't wrangler's business - they're here because a
 # pipeline step that runs after a deploy (a webhook, a notification) reaches
