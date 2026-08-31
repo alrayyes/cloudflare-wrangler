@@ -13,7 +13,7 @@
 # honest. oven/bun's images put /usr/local/bun-node-fallback-bin/node -> bun at
 # the end of PATH, so a bun-only image satisfies that shebang with bun and hides
 # the swap behind a symlink nothing in this file mentions.
-FROM oven/bun:1.3.14-alpine@sha256:5acc90a93e91ff07bf72aa90a7c9f0fa189765aec90b47bdbf2152d2196383c0 AS build
+FROM oven/bun:1.4.0-alpine@sha256:07235578f79ef8c6f97d94aee7938e76f5cdba5f21ae5dbfdd3d3d38058437eb AS build
 
 # bun's global bin is $BUN_INSTALL/bin - the same shape as pnpm 11's $PNPM_HOME/bin.
 # The trap is BUN_INSTALL_BIN, which overrides it outright and which oven's images
