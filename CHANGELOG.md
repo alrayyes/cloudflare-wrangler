@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.0](https://github.com/alrayyes/cloudflare-wrangler/compare/1.2.1...1.3.0) (2026-09-01)
+
+
+### Features
+
+* track the Dockerfile's curl/ca-certificates apk pins ([#44](https://github.com/alrayyes/cloudflare-wrangler/issues/44)) ([7410a53](https://github.com/alrayyes/cloudflare-wrangler/commit/7410a53ae3a71b2710b04e437b4316a429fd7524))
+
 ## [1.2.1](https://github.com/alrayyes/cloudflare-wrangler/compare/1.2.0...1.2.1) (2026-09-01)
 
 
