@@ -18,6 +18,8 @@ thing to run rather than an optional step.
 ```sh
 bun run lint                                          # biome, check only
 bun run lint:fix                                      # biome, writing
+bunx sort-package-json --check                        # package.json, check only
+bunx sort-package-json                                # package.json, writing
 docker build .
 docker compose run --rm -T hadolint hadolint Dockerfile
 ```
