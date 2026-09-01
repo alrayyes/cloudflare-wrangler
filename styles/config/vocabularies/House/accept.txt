@@ -2,6 +2,7 @@
 # Tool names are lowercase because that is how this project writes them - the
 # way they appear on a command line - and Vale.Terms holds the prose to it.
 Alpine
+apk
 biome
 bun
 bunx
