@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.2.0](https://github.com/alrayyes/cloudflare-wrangler/compare/1.1.1...1.2.0) (2026-09-01)
+
+
+### Features
+
+* track wrangler's Dockerfile version through Dependabot ([#35](https://github.com/alrayyes/cloudflare-wrangler/issues/35)) ([d0eaab2](https://github.com/alrayyes/cloudflare-wrangler/commit/d0eaab29482048900f8c39f2b8324f382f78c296))
+
 ## [1.1.1](https://github.com/alrayyes/cloudflare-wrangler/compare/1.1.0...1.1.1) (2026-09-01)
 
 
