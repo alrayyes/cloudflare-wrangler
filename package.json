@@ -6,6 +6,7 @@
 	"author": "Ryan Kes <511318+alrayyes@users.noreply.github.com>",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.8",
+		"@fission-ai/openspec": "1.11.0",
 		"@commitlint/cli": "21.2.2",
 		"@commitlint/config-conventional": "21.2.2",
 		"lefthook": "2.1.10",
@@ -20,8 +21,8 @@
 		"lint:md": "markdownlint-cli2",
 		"lint:grammar": "sh scripts/ltex.sh",
 		"prose:sync": "bun run scripts/install-vale.ts && .tools/vale sync",
-		"lint:prose": ".tools/vale --glob='!{styles/**,CHANGELOG.md}' --minAlertLevel=error .",
-		"lint:prose:advice": ".tools/vale --glob='!{styles/**,CHANGELOG.md}' .",
+		"lint:prose": ".tools/vale --glob='!{styles/**,CHANGELOG.md,.claude/**,openspec/**}' --minAlertLevel=error .",
+		"lint:prose:advice": ".tools/vale --glob='!{styles/**,CHANGELOG.md,.claude/**,openspec/**}' .",
 		"prepare": "test -n \"$CI\" || lefthook install"
 	},
 	"repository": "https://github.com/alrayyes/cloudflare-wrangler",

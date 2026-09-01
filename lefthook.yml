@@ -65,4 +65,6 @@ pre-commit:
       glob: "*.md"
       exclude:
         - CHANGELOG.md
+        - ".claude/**"
+        - "openspec/**"
       run: .tools/vale --minAlertLevel=error {staged_files}
