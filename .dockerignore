@@ -1,0 +1,8 @@
+.git
+node_modules
+.tools
+styles/Google
+styles/proselint
+.claude
+openspec
+CHANGELOG.md
