@@ -30,4 +30,4 @@
 
 ## 5. Close-out
 
-- [ ] 5.1 Close #27, referencing the pull request that shipped this
+- [x] 5.1 Close #27, referencing the pull request that shipped this
