@@ -117,10 +117,16 @@ that comment to know what to bump, so keep it.
 There is no Renovate here — its `autodiscover` never reaches a repo whose
 primary remote is `github.com`, so a `renovate.json` that once lived here
 never actually ran (removed in #28). Dependabot (`.github/dependabot.yml`)
-covers `bun`, `docker` (the `FROM` lines) and `github-actions`. The wrangler
-version and the `curl`/`ca-certificates` apk pins in the Dockerfile fall
-outside all three — see #27 and #29 for the tracking gap and where it
-stands.
+covers `bun`, `docker` (the `FROM` lines) and `github-actions`.
+
+The wrangler version lives in `package.json`'s `devDependencies`, same as
+every other pinned tool here, and the Dockerfile reads it from there at
+build time rather than carrying its own copy. That puts it in Dependabot's
+existing `bun` ecosystem coverage — it's excluded from the
+`bun-dependencies` group, so a wrangler bump always gets its own pull
+request, since it's the one bun-ecosystem dependency that actually ships in
+the image. The `curl`/`ca-certificates` apk pins in the Dockerfile still
+fall outside all of this — see #29 for that gap.
 
 Renovate raises image-affecting bumps as `fix(deps):` rather than the default
 `chore(deps):`, so they cut a release and republish. Tooling bumps stay

@@ -24,7 +24,14 @@ FROM oven/bun:1.4.0-alpine@sha256:07235578f79ef8c6f97d94aee7938e76f5cdba5f21ae5d
 ENV BUN_INSTALL=/opt/wrangler \
     BUN_INSTALL_BIN=/opt/wrangler/bin
 
-RUN bun add -g wrangler@4.120.0
+# The version lives in package.json's devDependencies, not hardcoded here -
+# that's the one manifest Dependabot's bun ecosystem already watches, so a
+# new wrangler release opens a pull request the same way every other pinned
+# tool in this repo already does (#27). Reading it at build time keeps this
+# the only place a `docker build .` needs to look; a Dockerfile ARG with its
+# own default would just reintroduce a second place to keep in sync by hand.
+COPY package.json /tmp/package.json
+RUN bun add -g "wrangler@$(bun -e "console.log(require('/tmp/package.json').devDependencies.wrangler)")"
 
 FROM node:26.8.1-alpine@sha256:2d984a15c9b54fd0aeb608b8e0d0d83529eb34d2966db27a1fb4f1edc3d298a3
 

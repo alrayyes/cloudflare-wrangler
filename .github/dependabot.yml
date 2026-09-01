@@ -21,6 +21,7 @@ updates:
     groups:
       bun-dependencies:
         patterns: ["*"]
+        exclude-patterns: ["wrangler"]
         update-types: [minor, patch]
 
   - package-ecosystem: docker
