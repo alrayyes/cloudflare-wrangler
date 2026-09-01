@@ -16,7 +16,7 @@
 	},
 	"scripts": {
 		"lint": "biome check",
-		"lint:fix": "biome check --write",
+		"lint:fix": "biome migrate --write && biome check --write",
 		"format": "prettier --write .",
 		"lint:format": "prettier --check .",
 		"lint:md": "markdownlint-cli2",
