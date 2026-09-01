@@ -5,6 +5,16 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.1.1](https://github.com/alrayyes/cloudflare-wrangler/compare/1.1.0...1.1.1) (2026-09-01)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the bun-dependencies group with 3 updates ([#20](https://github.com/alrayyes/cloudflare-wrangler/issues/20)) ([e4e49c4](https://github.com/alrayyes/cloudflare-wrangler/commit/e4e49c4890a84619fde0c70fda53e97b76282519))
+* **deps:** bump node from 24.19.0-alpine to 26.8.1-alpine ([#24](https://github.com/alrayyes/cloudflare-wrangler/issues/24)) ([a0e90cb](https://github.com/alrayyes/cloudflare-wrangler/commit/a0e90cb01e1a9c96c324af409c3e3d32befac98b))
+* **deps:** bump oven/bun from 1.3.14-alpine to 1.4.0-alpine ([#23](https://github.com/alrayyes/cloudflare-wrangler/issues/23)) ([4a5d0aa](https://github.com/alrayyes/cloudflare-wrangler/commit/4a5d0aa423cacefde2c12b82e9c34bbb93d1b5e7))
+* **docs:** remove stale Renovate references ([#31](https://github.com/alrayyes/cloudflare-wrangler/issues/31)) ([ce7af53](https://github.com/alrayyes/cloudflare-wrangler/commit/ce7af5381194a32dc1b3b28e3154c2629da51074))
+
 ## [1.1.0](https://github.com/alrayyes/cloudflare-wrangler/compare/1.0.179...1.1.0) (2026-08-20)
 
 
