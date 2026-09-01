@@ -127,13 +127,20 @@ build time rather than carrying its own copy. That puts it in Dependabot's
 existing `bun` ecosystem coverage — it's excluded from the
 `bun-dependencies` group, so a wrangler bump always gets its own pull
 request, since it's the one bun-ecosystem dependency that actually ships in
-the image. The `curl`/`ca-certificates` apk pins in the Dockerfile still
-fall outside all of this — see #29 for that gap.
+the image.
 
-Renovate raises image-affecting bumps as `fix(deps):` rather than the default
-`chore(deps):`, so they cut a release and republish. Tooling bumps stay
-`chore(deps):` — biome isn't in the image, so a new biome shouldn't produce a
-new tag.
+The `curl`/`ca-certificates` apk pins have no Dependabot ecosystem to join —
+its `docker` coverage only reads `FROM` lines. `.github/workflows/apk-version-check.yml`
+covers them instead: a weekly job runs `scripts/check-apk-versions.sh`,
+which diffs the pins against the pinned image's own Alpine branch and opens
+a pull request when they've drifted. See #29 for why this needed its own
+workflow rather than joining Dependabot.
+
+Dependabot's `bun` and `docker` ecosystems, and `apk-version-check.yml`
+alike, raise image-affecting bumps as `fix(deps):` rather than `chore(deps):`,
+so they cut a release and republish. Tooling bumps (biome, Prettier, and the
+rest of `bun-dependencies`) stay `chore(deps):` — they aren't in the image,
+so a new one shouldn't produce a new tag.
 
 ## Releasing
 

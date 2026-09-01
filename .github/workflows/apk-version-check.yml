@@ -1,0 +1,46 @@
+# Neither Renovate (never reaches this repo, #28) nor Dependabot's docker
+# ecosystem (only reads FROM lines) tracks the curl/ca-certificates apk
+# versions pinned in the Dockerfile - see #29. This is the replacement:
+# scripts/check-apk-versions.sh reads the pinned image's own Alpine branch
+# and diffs it against that branch's real package index, and this workflow
+# opens a pull request when it finds a difference, on the same weekly
+# cadence Dependabot already uses for everything else here.
+name: apk-version-check
+
+on:
+  schedule:
+    # Same day .github/dependabot.yml uses; cron has no timezone, so this
+    # drifts an hour against Amsterdam time across DST - not worth chasing
+    # for a weekly check.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - run: sh scripts/check-apk-versions.sh
+
+      # RELEASE_TOKEN, not the default GITHUB_TOKEN: the same reason
+      # release-auto-merge.yml uses it. A GITHUB_TOKEN-opened pull request
+      # triggers no workflow run of its own, which would leave this PR
+      # sitting with no CI ever starting on it.
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          add-paths: Dockerfile
+          commit-message: "fix(deps): bump curl/ca-certificates pins"
+          title: "fix(deps): bump curl/ca-certificates pins"
+          body: >-
+            Alpine's package index for this image's pinned branch has a
+            newer curl and/or ca-certificates than the Dockerfile's
+            `CURL_VERSION`/`CA_CERTIFICATES_VERSION`. See #29 for why
+            nothing else tracks this.
+          branch: apk-version-bump
+          delete-branch: true
+          labels: dependencies,docker
