@@ -111,13 +111,16 @@ them as though they are the commit, because they are.
 
 Everything is pinned to an exact version and the lockfile is committed:
 `devDependencies` without ranges, base images by tag _and_ digest, GitHub
-Actions by commit SHA with a `# vX.Y.Z` comment beside them. Renovate reads
+Actions by commit SHA with a `# vX.Y.Z` comment beside them. Dependabot reads
 that comment to know what to bump, so keep it.
 
-The wrangler version lives in the `bun add -g wrangler@...` line in the
-Dockerfile and is bumped by a custom Renovate manager matching that exact
-string. If you reword that line, update `renovate.json` with it or wrangler
-silently stops being updated.
+There is no Renovate here — its `autodiscover` never reaches a repo whose
+primary remote is `github.com`, so a `renovate.json` that once lived here
+never actually ran (removed in #28). Dependabot (`.github/dependabot.yml`)
+covers `bun`, `docker` (the `FROM` lines) and `github-actions`. The wrangler
+version and the `curl`/`ca-certificates` apk pins in the Dockerfile fall
+outside all three — see #27 and #29 for the tracking gap and where it
+stands.
 
 Renovate raises image-affecting bumps as `fix(deps):` rather than the default
 `chore(deps):`, so they cut a release and republish. Tooling bumps stay
