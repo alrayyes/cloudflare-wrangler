@@ -123,7 +123,7 @@ The wrangler version lives in `package.json`'s `devDependencies`, same as
 every other pinned tool here, and the Dockerfile reads it from there at
 build time rather than carrying its own copy. That puts it in Dependabot's
 existing `bun` ecosystem coverage — it's excluded from the
-`bun-dependencies` group so a wrangler bump always gets its own pull
+`bun-dependencies` group, so a wrangler bump always gets its own pull
 request, since it's the one bun-ecosystem dependency that actually ships in
 the image. The `curl`/`ca-certificates` apk pins in the Dockerfile still
 fall outside all of this — see #29 for that gap.
