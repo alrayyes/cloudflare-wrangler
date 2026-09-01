@@ -15,6 +15,8 @@ pre-push:
       run: bun run lint:format
     - name: markdownlint
       run: bun run lint:md
+    - name: sort-package-json
+      run: bunx --bun sort-package-json --check
     # Grammar and spelling. Here rather than in pre-commit because the first
     # run fetches a ~300MB archive carrying its own Java; after that it is
     # cached outside the repo and a run over three documents is seconds.
@@ -27,6 +29,10 @@ pre-commit:
     - run: bun run lint:fix .
       glob: "*"
       stage_fixed: true
+    - name: sort-package-json
+      glob: "package.json"
+      stage_fixed: true
+      run: bunx --bun sort-package-json
     - run: docker compose run --rm -T hadolint hadolint Dockerfile
       glob: "Dockerfile"
     - run: docker build .

@@ -32,6 +32,7 @@ jobs:
       # and taring the cache to save them costs more than it saves.
       - run: bun install --frozen-lockfile
       - run: bun run lint
+      - run: bunx --bun sort-package-json --check
 
   commits:
     # release-please reads Conventional Commits to decide the next version and write
