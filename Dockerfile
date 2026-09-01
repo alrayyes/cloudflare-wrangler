@@ -35,12 +35,11 @@ FROM node:26.8.1-alpine@sha256:2d984a15c9b54fd0aeb608b8e0d0d83529eb34d2966db27a1
 # third party being down.
 #
 # Pinned versions, not bare `apk add curl ca-certificates` - hadolint DL3018
-# wants that everywhere else in this file already. The version has to live in
-# an ENV rather than inline in the RUN, because that's what the Repology
-# datasource's regex manager in renovate.json matches on to keep both current.
-# renovate: datasource=repology depName=alpine_3_24/curl versioning=loose
+# wants that everywhere else in this file already. Renovate never reaches
+# this repo (its autodiscover is blind to a github.com-primary remote), and
+# Dependabot's docker ecosystem only reads FROM lines, not apk versions
+# pinned in a RUN - so nothing currently bumps these two. Tracked in #29.
 ENV CURL_VERSION="8.21.0-r0"
-# renovate: datasource=repology depName=alpine_3_24/ca-certificates versioning=loose
 ENV CA_CERTIFICATES_VERSION="20260611-r0"
 RUN apk add --no-cache curl="${CURL_VERSION}" ca-certificates="${CA_CERTIFICATES_VERSION}"
 
