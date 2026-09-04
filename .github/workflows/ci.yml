@@ -85,14 +85,15 @@ jobs:
   ltex:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    # The release is ~300MB and carries its own Java. This image is built once
+    # by alrayyes/ltex-cli-plus rather than fetched fresh on every run, so
+    # ltex-cli-plus is already on PATH and there's nothing left to cache.
+    container:
+      image: ghcr.io/alrayyes/ltex-cli-plus@sha256:bf8c54087ad5418da57d9ef5a9604b4dd70aa0737fa0d732b2a2d5cd81e64c18 # 18.7.0
     steps:
+      # The image carries the CLI and nothing else - checkout needs git.
+      - run: apt-get update && apt-get install -y --no-install-recommends git
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # The release is ~300MB and carries its own Java. Cached on the version
-      # in the script, so a run costs a restore rather than a download.
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ltex-ls-plus
-          key: ltex-${{ hashFiles('scripts/ltex.sh') }}
       # The script directly rather than `bun run lint:grammar`, which is all
       # that script does anyway - this job has no other use for a bun install.
       - run: sh scripts/ltex.sh
