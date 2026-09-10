@@ -5,6 +5,15 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.1](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.0...1.3.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* **ci:** auto-merge dependabot PRs with RELEASE_TOKEN, not GITHUB_TOKEN ([#55](https://github.com/alrayyes/cloudflare-wrangler/issues/55)) ([6b12c75](https://github.com/alrayyes/cloudflare-wrangler/commit/6b12c759d244286dd023bac0f374c7cf25237827))
+* **deps-dev:** bump wrangler from 4.127.1 to 4.129.0 ([#53](https://github.com/alrayyes/cloudflare-wrangler/issues/53)) ([b776d61](https://github.com/alrayyes/cloudflare-wrangler/commit/b776d61c1bf9d21d1104ae827ae7846fb27421be))
+* **deps:** bump oven/bun from 1.4.0-alpine to 1.4.2-alpine ([#51](https://github.com/alrayyes/cloudflare-wrangler/issues/51)) ([17cbc56](https://github.com/alrayyes/cloudflare-wrangler/commit/17cbc5685047f7175e5f03ecc257b9c43e74f2c5))
+
 ## [1.3.0](https://github.com/alrayyes/cloudflare-wrangler/compare/1.2.1...1.3.0) (2026-09-01)
 
 
