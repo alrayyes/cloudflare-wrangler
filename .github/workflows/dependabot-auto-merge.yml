@@ -31,6 +31,14 @@ jobs:
       # Patch and minor only — dependabot.yml already groups those two
       # together for the same reason. A major stays a pull request someone
       # reads, the same as any other breaking change would.
+      #
+      # RELEASE_TOKEN, not the default GITHUB_TOKEN: the same reason
+      # release-auto-merge.yml uses it. GitHub suppresses the push event a
+      # GITHUB_TOKEN-performed merge produces, which left release.yml's
+      # `push` trigger never firing after one of these merges landed on
+      # main — every dependency bump auto-merged this way sat unreleased
+      # until an unrelated, non-token push happened to wake release-please
+      # back up. See #54.
       - name: Enable auto-merge for patch and minor updates
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
@@ -38,4 +46,4 @@ jobs:
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
