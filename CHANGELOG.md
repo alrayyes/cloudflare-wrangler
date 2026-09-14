@@ -5,6 +5,16 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.2](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.1...1.3.2) (2026-09-14)
+
+
+### Bug Fixes
+
+* **ci:** use pull_request_target for dependabot auto-merge ([#60](https://github.com/alrayyes/cloudflare-wrangler/issues/60)) ([55f7050](https://github.com/alrayyes/cloudflare-wrangler/commit/55f7050b909083079342d24af8a76bbfa2e16940))
+* **deps-dev:** bump the bun-dependencies group with 2 updates ([#58](https://github.com/alrayyes/cloudflare-wrangler/issues/58)) ([1648f03](https://github.com/alrayyes/cloudflare-wrangler/commit/1648f0396e5102ec62144c2462448072a5b90ed1))
+* **deps-dev:** bump wrangler from 4.129.0 to 4.131.0 ([#59](https://github.com/alrayyes/cloudflare-wrangler/issues/59)) ([4ee179e](https://github.com/alrayyes/cloudflare-wrangler/commit/4ee179ee012945c28630a3db06ee2d39495ea8bd))
+* **deps:** bump node from 26.8.1-alpine to 26.8.2-alpine ([#57](https://github.com/alrayyes/cloudflare-wrangler/issues/57)) ([babb9fa](https://github.com/alrayyes/cloudflare-wrangler/commit/babb9fa683e4875669e3129727f1dca9a3eba7d6))
+
 ## [1.3.1](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.0...1.3.1) (2026-09-10)
 
 
