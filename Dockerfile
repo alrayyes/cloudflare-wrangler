@@ -47,7 +47,7 @@ FROM node:26.8.2-alpine@sha256:ef24c5053d50fdc3e4e56eb4e7ddb7861874ab0fdc797046b
 # Dependabot's docker ecosystem only reads FROM lines, not apk versions
 # pinned in a RUN - so nothing currently bumps these two. Tracked in #29.
 ENV CURL_VERSION="8.22.0-r0"
-ENV CA_CERTIFICATES_VERSION="20260611-r0"
+ENV CA_CERTIFICATES_VERSION="20260909-r0"
 RUN apk add --no-cache curl="${CURL_VERSION}" ca-certificates="${CA_CERTIFICATES_VERSION}"
 
 # One prefix, one COPY, and nothing landing in /usr/local to collide with node's
