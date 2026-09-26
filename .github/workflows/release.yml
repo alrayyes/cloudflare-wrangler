@@ -81,9 +81,10 @@ jobs:
           context: .
           push: true
           pull: true
-          # The version, and `latest` for consumers that track the tip. vps-docker
-          # pins the digest and lets Renovate move it, so `latest` there is a name
-          # for the digest rather than a floating reference.
+          # The version, and `latest` for consumers that track the tip. A
+          # careful consumer pins the digest and lets Renovate move it, so
+          # `latest` there is a name for the digest rather than a floating
+          # reference.
           tags: |
             ghcr.io/${{ github.repository }}:${{ needs.release-please.outputs.tag_name }}
             ghcr.io/${{ github.repository }}:latest
