@@ -5,6 +5,15 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.6](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.5...1.3.6) (2026-09-28)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the bun-dependencies group with 5 updates ([#74](https://github.com/alrayyes/cloudflare-wrangler/issues/74)) ([b9c85ae](https://github.com/alrayyes/cloudflare-wrangler/commit/b9c85ae7e25ad943063400f221622f2e9c2b840f))
+* **deps-dev:** bump wrangler from 4.134.0 to 4.139.0 ([#75](https://github.com/alrayyes/cloudflare-wrangler/issues/75)) ([97b74e1](https://github.com/alrayyes/cloudflare-wrangler/commit/97b74e1c8fcd9b1b93484cf72f75f70ea559b164))
+* **deps:** bump node from 26.9.0-alpine to 26.10.0-alpine ([#73](https://github.com/alrayyes/cloudflare-wrangler/issues/73)) ([9b895f7](https://github.com/alrayyes/cloudflare-wrangler/commit/9b895f7cd0abfaf2a6befcc9afa46d4977b3b747))
+
 ## [1.3.5](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.4...1.3.5) (2026-09-21)
 
 
