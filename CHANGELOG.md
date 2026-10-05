@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.8](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.7...1.3.8) (2026-10-05)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump wrangler from 4.139.0 to 4.146.0 ([#78](https://github.com/alrayyes/cloudflare-wrangler/issues/78)) ([2e7082b](https://github.com/alrayyes/cloudflare-wrangler/commit/2e7082b91d92c5f5eaba7a1c6b0ba700006e569f))
+
 ## [1.3.7](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.6...1.3.7) (2026-10-05)
 
 
