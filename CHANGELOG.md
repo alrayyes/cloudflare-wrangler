@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.7](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.6...1.3.7) (2026-10-05)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the bun-dependencies group with 3 updates ([#77](https://github.com/alrayyes/cloudflare-wrangler/issues/77)) ([2ca07d8](https://github.com/alrayyes/cloudflare-wrangler/commit/2ca07d82d13634b07fe4f8629d63873a9875ef20))
+
 ## [1.3.6](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.5...1.3.6) (2026-09-28)
 
 
