@@ -118,7 +118,7 @@ that comment to know what to bump, so keep it.
 
 There is no Renovate here — its `autodiscover` never reaches a repo whose
 primary remote is `github.com`, so a `renovate.json` that once lived here
-never actually ran (removed in #28). Dependabot (`.github/dependabot.yml`)
+never actually ran, so it was removed. Dependabot (`.github/dependabot.yml`)
 covers `bun`, `docker` (the `FROM` lines) and `github-actions`.
 
 The wrangler version lives in `package.json`'s `devDependencies`, same as
@@ -133,8 +133,8 @@ The `curl`/`ca-certificates` apk pins have no Dependabot ecosystem to join —
 its `docker` coverage only reads `FROM` lines. `.github/workflows/apk-version-check.yml`
 covers them instead: a weekly job runs `scripts/check-apk-versions.sh`,
 which diffs the pins against the pinned image's own Alpine branch and opens
-a pull request when they've drifted. See #29 for why this needed its own
-workflow rather than joining Dependabot.
+a pull request when they've drifted. It exists because Dependabot has no
+apk data source, so these pins couldn't join it.
 
 Dependabot's `bun` and `docker` ecosystems, and `apk-version-check.yml`
 alike, raise image-affecting bumps as `fix(deps):` rather than `chore(deps):`,
