@@ -23,19 +23,22 @@ pre-push:
     - name: ltex
       run: bun run lint:grammar
 
+# Judges only what the commit contains: every job is handed {staged_files}, so a
+# half-finished file elsewhere in the tree can't fail, or be rewritten by, a
+# commit. `docker build` doesn't look at the commit at all; it runs in pre-push
+# and CI.
 pre-commit:
   parallel: true
   jobs:
-    - run: bun run lint:fix .
-      glob: "*"
+    - run: bun run lint:fix {staged_files}
+      glob: "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}"
       stage_fixed: true
     - name: sort-package-json
       glob: "package.json"
       stage_fixed: true
-      run: bunx --bun sort-package-json
-    - run: docker compose run --rm -T hadolint hadolint Dockerfile
-      glob: "Dockerfile"
-    - run: docker build .
+      run: bunx --bun sort-package-json {staged_files}
+    # Reads the staged Dockerfile from the index, not the working tree.
+    - run: git show :Dockerfile | docker compose run --rm -T hadolint hadolint -
       glob: "Dockerfile"
 
     # Prettier decides the layout and markdownlint then judges what Prettier
@@ -53,7 +56,7 @@ pre-commit:
             run: bunx --bun prettier --write {staged_files}
           - name: markdownlint
             glob: "*.md"
-            run: bunx --bun markdownlint-cli2 {staged_files}
+            run: bunx --bun markdownlint-cli2 --no-globs {staged_files}
 
     # YAML gets the same formatter and nothing judges the result afterwards,
     # so it is one job rather than a pipe.
