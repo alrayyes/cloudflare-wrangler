@@ -17,7 +17,8 @@ thing to run rather than an optional step.
 
 ```sh
 bun run lint                                          # biome, check only
-bun run lint:fix                                      # biome, writing
+bun run lint:fix [files]                             # biome, writing; the hook passes the staged files
+bun run lint:migrate                                  # biome migrate, after bumping Biome
 bunx sort-package-json --check                        # package.json, check only
 bunx sort-package-json                                # package.json, writing
 docker build .
@@ -25,7 +26,10 @@ docker compose run --rm -T hadolint hadolint Dockerfile
 ```
 
 The hooks run those before a commit and a push, and CI runs the same ones, so
-CI should rarely be the first to tell you something is wrong.
+CI should rarely be the first to tell you something is wrong. `pre-commit`
+judges only what the commit contains: every job is handed the staged files, so
+a half-finished file elsewhere can't fail or be rewritten by a commit. Whole-tree
+checks and `docker build` run in `pre-push` and CI.
 
 ## The prose
 

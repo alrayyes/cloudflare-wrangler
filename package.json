@@ -12,10 +12,11 @@
 	"scripts": {
 		"format": "prettier --write .",
 		"lint": "biome check",
-		"lint:fix": "biome migrate --write && biome check --write",
+		"lint:fix": "biome check --write --no-errors-on-unmatched",
 		"lint:format": "prettier --check .",
 		"lint:grammar": "sh scripts/ltex.sh",
 		"lint:md": "markdownlint-cli2",
+		"lint:migrate": "biome migrate --write",
 		"lint:prose": ".tools/vale --glob='!{styles/**,CHANGELOG.md,.claude/**,openspec/**}' --minAlertLevel=error .",
 		"lint:prose:advice": ".tools/vale --glob='!{styles/**,CHANGELOG.md,.claude/**,openspec/**}' .",
 		"prepare": "test -n \"$CI\" || lefthook install",
