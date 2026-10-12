@@ -33,7 +33,7 @@ ENV BUN_INSTALL=/opt/wrangler \
 COPY package.json /tmp/package.json
 RUN bun add -g "wrangler@$(bun -e "console.log(require('/tmp/package.json').devDependencies.wrangler)")"
 
-FROM node:26.10.0-alpine@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80
+FROM node:26.11.1-alpine@sha256:143494b1da2945f061539253adc65e4f1569ddf07da2d384c022c791a9d90a4a
 
 # curl and ca-certificates aren't wrangler's business - they're here because a
 # pipeline step that runs after a deploy (a webhook, a notification) reaches
