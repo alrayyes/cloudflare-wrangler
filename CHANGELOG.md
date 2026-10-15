@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.10](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.9...1.3.10) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ci:** run release-auto-merge when the autorelease label is added ([#90](https://github.com/alrayyes/cloudflare-wrangler/issues/90)) ([ecd9af1](https://github.com/alrayyes/cloudflare-wrangler/commit/ecd9af14c24b72f23572b17f103ba707425a5a67))
+
 ## [1.3.9](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.8...1.3.9) (2026-10-12)
 
 
