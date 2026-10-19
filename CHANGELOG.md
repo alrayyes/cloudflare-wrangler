@@ -5,6 +5,16 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.11](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.10...1.3.11) (2026-10-19)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the bun-dependencies group with 4 updates ([#94](https://github.com/alrayyes/cloudflare-wrangler/issues/94)) ([1905180](https://github.com/alrayyes/cloudflare-wrangler/commit/19051804af368a02a9771021b22000464332b1ee))
+* **deps-dev:** bump wrangler from 4.149.0 to 4.151.0 ([#95](https://github.com/alrayyes/cloudflare-wrangler/issues/95)) ([bd5d252](https://github.com/alrayyes/cloudflare-wrangler/commit/bd5d252ec36a7adab800b3a0cb909ec91d2ed391))
+* **deps:** bump node from 26.11.1-alpine to 26.12.0-alpine ([#93](https://github.com/alrayyes/cloudflare-wrangler/issues/93)) ([4bd0805](https://github.com/alrayyes/cloudflare-wrangler/commit/4bd0805e3b891ec72c85a8f57b3b74608b45a377))
+* **deps:** bump oven/bun from 1.4.2-alpine to 1.4.3-alpine ([#92](https://github.com/alrayyes/cloudflare-wrangler/issues/92)) ([3031b09](https://github.com/alrayyes/cloudflare-wrangler/commit/3031b096b2804033b5aeaf415cba8292b99bec19))
+
 ## [1.3.10](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.9...1.3.10) (2026-10-15)
 
 
