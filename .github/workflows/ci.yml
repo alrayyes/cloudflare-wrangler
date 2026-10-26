@@ -120,9 +120,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # No config file. The sibling images need one to argue with DL3018 about
-      # unpinned apk versions; this Dockerfile installs nothing through apk, so
-      # hadolint has nothing to forgive and gets no excuses to carry.
+      # No config file. The one DL3018 exception (unpinned apk) is an inline
+      # `hadolint ignore` in the Dockerfile, next to the reason for it.
       - uses: hadolint/hadolint-action@06be81baf89a55ffd0e24b8f04a4185738dd3387 # v3.5.0
         with:
           dockerfile: Dockerfile
