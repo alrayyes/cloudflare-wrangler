@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.14](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.13...1.3.14) (2026-10-26)
+
+
+### Bug Fixes
+
+* **lint:** leave Markdown to prettier in Biome ([#106](https://github.com/alrayyes/cloudflare-wrangler/issues/106)) ([652a1d8](https://github.com/alrayyes/cloudflare-wrangler/commit/652a1d83518e737bf724dffb3603b3a29d6b1dcc))
+
 ## [1.3.13](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.12...1.3.13) (2026-10-26)
 
 
