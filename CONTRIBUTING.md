@@ -133,16 +133,13 @@ existing `bun` ecosystem coverage — it's excluded from the
 request, since it's the one bun-ecosystem dependency that actually ships in
 the image.
 
-The `curl`/`ca-certificates` apk pins have no Dependabot ecosystem to join —
-its `docker` coverage only reads `FROM` lines. `.github/workflows/apk-version-check.yml`
-covers them instead: a weekly job runs `scripts/check-apk-versions.sh`,
-which diffs the pins against the pinned image's own Alpine branch and opens
-a pull request when they've drifted. It exists because Dependabot has no
-apk data source, so these pins couldn't join it.
+`curl` and `ca-certificates` are installed unpinned (`hadolint ignore=DL3018`):
+Alpine's mirror drops old builds, so exact apk pins break the image build on
+every rotation. The base image digest is still pinned.
 
-Dependabot's `bun` and `docker` ecosystems, and `apk-version-check.yml`
-alike, raise image-affecting bumps as `fix(deps):` rather than `chore(deps):`,
-so they cut a release and republish. Tooling bumps (biome, Prettier, and the
+Dependabot's `bun` and `docker` ecosystems raise image-affecting bumps as
+`fix(deps):` rather than `chore(deps):`, so they cut a release and
+republish. Tooling bumps (biome, Prettier, and the
 rest of `bun-dependencies`) stay `chore(deps):` — they aren't in the image,
 so a new one shouldn't produce a new tag.
 

@@ -41,14 +41,14 @@ FROM node:26.12.1-alpine@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64
 # failure is easy to miss if that step also has to not fail the job over a
 # third party being down.
 #
-# Pinned versions, not bare `apk add curl ca-certificates` - hadolint DL3018
-# wants that everywhere else in this file already. Renovate never reaches
-# this repo (its autodiscover is blind to a github.com-primary remote), and
-# Dependabot's docker ecosystem only reads FROM lines, not apk versions
-# pinned in a RUN - so nothing currently bumps these two. Tracked in #29.
-ENV CURL_VERSION="8.23.0-r0"
-ENV CA_CERTIFICATES_VERSION="20261020-r0"
-RUN apk add --no-cache curl="${CURL_VERSION}" ca-certificates="${CA_CERTIFICATES_VERSION}"
+# Deliberately unpinned. Alpine's mirror keeps only the current build of each
+# package, so an exact pin breaks `apk add` the day the mirror rotates (#48,
+# #103) and turns every pull request red until someone bumps it. Dependabot
+# can't track apk versions, so nothing would do that bump for free. The image
+# tag and base digest are still pinned; these two packages float within that
+# Alpine release.
+# hadolint ignore=DL3018
+RUN apk add --no-cache curl ca-certificates
 
 # One prefix, one COPY, and nothing landing in /usr/local to collide with node's
 # own files. bun writes the bin entries as symlinks relative to $BUN_INSTALL
