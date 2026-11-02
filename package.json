@@ -31,6 +31,6 @@
 		"markdownlint-cli2": "0.24.0",
 		"prettier": "3.9.10",
 		"sort-package-json": "4.1.0",
-		"wrangler": "4.152.0"
+		"wrangler": "4.156.0"
 	}
 }
