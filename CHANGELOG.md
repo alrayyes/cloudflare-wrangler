@@ -5,6 +5,13 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.20](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.19...1.3.20) (2026-11-16)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump @fission-ai/openspec from 1.16.0 to 2.0.0 ([#126](https://github.com/alrayyes/cloudflare-wrangler/issues/126)) ([e444ace](https://github.com/alrayyes/cloudflare-wrangler/commit/e444ace192c8ed18eeb2445fc051cf6f952806a4))
+
 ## [1.3.19](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.18...1.3.19) (2026-11-16)
 
 
