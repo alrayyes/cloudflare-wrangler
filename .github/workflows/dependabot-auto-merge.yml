@@ -27,15 +27,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Patch and minor only — dependabot.yml already groups those two
-      # together for the same reason. A major stays a pull request someone
-      # reads, the same as any other breaking change would.
+      # Every update type, majors included. CI and branch protection are the
+      # gate: auto-merge only fires once the required checks are green, so a
+      # breaking bump that fails them stays open and one that passes lands.
       #
       # RELEASE_TOKEN, not the default GITHUB_TOKEN: the same reason
       # release-auto-merge.yml uses it. GitHub suppresses the push event a
@@ -44,10 +38,7 @@ jobs:
       # main — every dependency bump auto-merged this way sat unreleased
       # until an unrelated, non-token push happened to wake release-please
       # back up. See #54.
-      - name: Enable auto-merge for patch and minor updates
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+      - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
