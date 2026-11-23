@@ -5,6 +5,14 @@ no longer exists. Those entries are kept for the record, but their commit and
 compare links are gone: this repository starts from a single import commit, so there
 is nothing for them to point at.
 
+## [1.3.21](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.20...1.3.21) (2026-11-23)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the bun-dependencies group with 2 updates ([#134](https://github.com/alrayyes/cloudflare-wrangler/issues/134)) ([b33fe98](https://github.com/alrayyes/cloudflare-wrangler/commit/b33fe9887abae235a7c73d85519c855e385f88e9))
+* **deps:** bump oven/bun from 1.4.4-alpine to 1.4.5-alpine ([#133](https://github.com/alrayyes/cloudflare-wrangler/issues/133)) ([c233b58](https://github.com/alrayyes/cloudflare-wrangler/commit/c233b582b6f475d16f274c579df396523b83bd96))
+
 ## [1.3.20](https://github.com/alrayyes/cloudflare-wrangler/compare/1.3.19...1.3.20) (2026-11-16)
 
 
